@@ -35,8 +35,13 @@ if (!(options.url && mqttTopic)) {
 let client = mqtt.connect(program.host || process.env.MQTTHOST || "mqtt://localhost");
 console.log(`Connecting: ${client.options.href}`);
 
+let lastValue = void 0;
 let detector = new SoundDetection(options, (dB) => {
-    client.publish(mqttTopic, `${dB.toFixed(1)}`);
+    let value = `${dB.toFixed(0)}`;
+    if (value !== lastValue) {
+        client.publish(mqttTopic, value);
+    }
+    lastValue = value;
 });
 
 client.on('connect', (connack) => {
