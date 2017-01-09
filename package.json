@@ -4,7 +4,7 @@
   "description": "Output an HTTP audio feed sound level to an MQTT topic",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./index.js"
   },
   "keywords": [
     "mqtt",

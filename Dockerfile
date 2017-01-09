@@ -18,4 +18,6 @@ LABEL org.label-schema.vendor="Barry John Williams" \
 
 RUN npm install --production --quiet
 
-ENTRYPOINT [ "npm", "run-script", "start" ]
+ENTRYPOINT [ "npm", "run-script" ]
+
+CMD [ "start" ]
