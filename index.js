@@ -22,7 +22,7 @@ let options = {
         numberOfChannels: program.channels || process.env.CHANNELS || 1,
         signed: true
     },
-    triggerLevel: program.triggerLevel || process.env.TRIGGERLEVEL || 20
+    triggerLevel: program.triggerLevel || process.env.TRIGGERLEVEL || 30
 }
 
 let mqttTopic = program.topic || process.env.MQTTTOPIC;
@@ -35,13 +35,12 @@ if (!(options.url && mqttTopic)) {
 let client = mqtt.connect(program.host || process.env.MQTTHOST || "mqtt://localhost");
 console.log(`Connecting: ${client.options.href}`);
 
-let lastValue = void 0;
+let lastPublishedValue = -80;
 let detector = new SoundDetection(options, (dB) => {
-    let value = `${dB.toFixed(0)}`;
-    if (value !== lastValue) {
-        client.publish(mqttTopic, value);
+    if (Math.abs(lastPublishedValue - dB) > 2) {
+        client.publish(mqttTopic, `${dB.toFixed(1)}`);
+        lastPublishedValue = dB;
     }
-    lastValue = value;
 });
 
 client.on('connect', (connack) => {
