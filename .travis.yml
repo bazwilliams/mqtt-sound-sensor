@@ -1,0 +1,10 @@
+language: node_js
+node_js: 4
+sudo: required
+services:
+  - docker
+before_script:
+  - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+script:
+  - make all-the-dockers
+  - make docker-push
