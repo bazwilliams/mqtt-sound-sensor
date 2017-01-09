@@ -1,0 +1,24 @@
+{
+  "name": "mqtt-sound-sensor",
+  "version": "0.0.1",
+  "description": "Output an HTTP audio feed level to an MQTT topic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mqtt",
+    "iot",
+    "sound",
+    "webcam",
+    "sensor",
+    "event"
+  ]
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "mqtt": "^2.2.1",
+    "sound-detection": "0.0.3"
+  }
+}
