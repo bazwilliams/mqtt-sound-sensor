@@ -12,7 +12,6 @@ program
     .option('-t --topic <topic>', 'MQTT topic to publish onto')
     .option('-b --bit-depth <n>', 'Bit depth of audio stream [16]', parseInt)
     .option('-c --channels <n>', 'Number of Channels [1]', parseInt)
-    .option('-l --trigger-level <n>', 'Number of dB above ambient before triggered [30]', parseInt)
     .parse(process.argv);
 
 let options = {
@@ -21,8 +20,7 @@ let options = {
         bitDepth: program.bitDepth || process.env.BITDEPTH || 16,
         numberOfChannels: program.channels || process.env.CHANNELS || 1,
         signed: true
-    },
-    triggerLevel: program.triggerLevel || process.env.TRIGGERLEVEL || 30
+    }
 }
 
 let mqttTopic = program.topic || process.env.MQTTTOPIC;
@@ -36,6 +34,7 @@ let client = mqtt.connect(program.host || process.env.MQTTHOST || "mqtt://localh
 console.log(`Connecting: ${client.options.href}`);
 
 let lastPublishedValue = -80;
+
 let detector = new SoundDetection(options, (dB) => {
     if (Math.abs(lastPublishedValue - dB) > 2) {
         client.publish(mqttTopic, `${dB.toFixed(1)}`);
@@ -52,4 +51,4 @@ client.on('connect', (connack) => {
 
 client.on('error', (err) => {
     console.error(`MQTT Client Error: ${err}`);
-})
+});
