@@ -19,6 +19,6 @@
   "dependencies": {
     "commander": "^2.9.0",
     "mqtt": "^2.2.1",
-    "sound-detection": "0.0.3"
+    "sound-detection": "^0.1.0"
   }
 }
